@@ -1,9 +1,10 @@
 import 'server-only'
 import { cookies } from 'next/headers'
+import { redirect } from 'next/navigation'
 import { randomBytes } from 'crypto'
 import { ObjectId, type WithId, type Document } from 'mongodb'
 import { getDb } from './mongodb'
-import type { AppUser } from './types'
+import { STAFF_ROLES, type AppUser } from './types'
 
 export const SESSION_COOKIE = 'mh_session'
 const SESSION_TTL_MS = 1000 * 60 * 60 * 24 * 30 // 30 days
@@ -81,4 +82,27 @@ export async function getCurrentUser(): Promise<AppUser | null> {
   if (!userDoc) return null
 
   return normalizeUser(userDoc)
+}
+
+/**
+ * Ensures a user is authenticated. Redirects to /login if not.
+ * Use at the top of every protected page/server action.
+ */
+export async function requireUser(): Promise<AppUser> {
+  const user = await getCurrentUser()
+  if (!user) redirect('/login')
+  return user
+}
+
+/**
+ * Ensures the current user holds a staff role. Returns null when the user
+ * is authenticated but lacks permission (caller should render 403), and
+ * redirects to /login when no user is present at all.
+ */
+export async function requireStaff(): Promise<AppUser | null> {
+  const user = await requireUser()
+  if (!STAFF_ROLES.includes(user.role as (typeof STAFF_ROLES)[number])) {
+    return null
+  }
+  return user
 }
