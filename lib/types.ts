@@ -46,6 +46,13 @@ export interface TeamMember {
   avatarUrl: string | null
 }
 
+export interface LegacyEntry {
+  id: string
+  title: string
+  subtitle: string | null
+  description: string | null
+}
+
 export function isStaffRole(role: string | null | undefined): role is StaffRole {
   return !!role && (STAFF_ROLES as readonly string[]).includes(role)
 }

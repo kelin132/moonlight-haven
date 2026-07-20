@@ -37,17 +37,13 @@ export function UserMenu({ user }: { user: AppUser }) {
           </span>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem asChild>
-          <Link href="/profile">
-            <UserIcon className="size-4" />
-            My Profile
-          </Link>
+        <DropdownMenuItem render={<Link href="/profile" />}>
+          <UserIcon className="size-4" />
+          My Profile
         </DropdownMenuItem>
-        <DropdownMenuItem asChild>
-          <Link href="/profile/edit">
-            <Pencil className="size-4" />
-            Edit Profile
-          </Link>
+        <DropdownMenuItem render={<Link href="/profile/edit" />}>
+          <Pencil className="size-4" />
+          Edit Profile
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <form action={logoutAction}>

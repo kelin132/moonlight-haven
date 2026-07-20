@@ -47,8 +47,8 @@ export default function SupportPage() {
                 <h3 className="font-semibold">{l.title}</h3>
                 <p className="text-sm text-muted-foreground text-pretty">{l.desc}</p>
               </div>
-              <Button asChild variant="secondary" className="mt-1 w-full">
-                <Link href={l.href}>Open</Link>
+              <Button render={<Link href={l.href} />} variant="secondary" className="mt-1 w-full">
+                Open
               </Button>
             </CardContent>
           </Card>

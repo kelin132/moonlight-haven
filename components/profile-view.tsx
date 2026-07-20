@@ -86,11 +86,13 @@ export function ProfileView({
           </div>
 
           {isOwner ? (
-            <Button asChild variant="secondary" className="self-start sm:self-auto">
-              <Link href="/profile/edit">
-                <Pencil className="size-4" />
-                Edit Profile
-              </Link>
+            <Button
+              render={<Link href="/profile/edit" />}
+              variant="secondary"
+              className="self-start sm:self-auto"
+            >
+              <Pencil className="size-4" />
+              Edit Profile
             </Button>
           ) : null}
         </div>

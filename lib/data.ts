@@ -2,7 +2,7 @@ import 'server-only'
 import { ObjectId, type WithId, type Document } from 'mongodb'
 import { getDb } from './mongodb'
 import { normalizeUser } from './auth'
-import type { AppUser, Card, Guild, TeamMember } from './types'
+import type { AppUser, Card, Guild, LegacyEntry, TeamMember } from './types'
 
 function toGuild(doc: WithId<Document>): Guild {
   return {
@@ -116,6 +116,21 @@ export async function getTeam(): Promise<TeamMember[]> {
       .find({ role: { $in: ['True Owner', 'Owner', 'Mod'] } })
       .toArray()
     return staff.map(toTeamMember)
+  } catch {
+    return []
+  }
+}
+
+export async function getLegacyEntries(): Promise<LegacyEntry[]> {
+  try {
+    const db = await getDb()
+    const docs = await db.collection('legacy').find({}).toArray()
+    return docs.map((doc) => ({
+      id: doc._id.toString(),
+      title: doc.title ?? doc.name ?? 'Untitled',
+      subtitle: doc.subtitle ?? doc.category ?? null,
+      description: doc.description ?? null,
+    }))
   } catch {
     return []
   }
