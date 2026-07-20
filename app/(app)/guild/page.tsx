@@ -65,11 +65,12 @@ export default async function GuildPage() {
 
               {g.previewUrl ? (
                 <CardFooter>
-                  <Button asChild className="w-full">
-                    <a href={g.previewUrl} target="_blank" rel="noopener noreferrer">
-                      <ExternalLink className="size-4" />
-                      Preview
-                    </a>
+                  <Button
+                    render={<a href={g.previewUrl} target="_blank" rel="noopener noreferrer" />}
+                    className="w-full"
+                  >
+                    <ExternalLink className="size-4" />
+                    Preview
                   </Button>
                 </CardFooter>
               ) : null}

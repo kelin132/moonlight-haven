@@ -28,11 +28,9 @@ export default async function CardDetailPage({
 
   return (
     <div className="mx-auto max-w-4xl">
-      <Button asChild variant="ghost" size="sm" className="mb-4">
-        <Link href="/cards">
-          <ArrowLeft className="size-4" />
-          Back to cards
-        </Link>
+      <Button render={<Link href="/cards" />} variant="ghost" size="sm" className="mb-4">
+        <ArrowLeft className="size-4" />
+        Back to cards
       </Button>
 
       <div className="grid gap-6 md:grid-cols-2">
